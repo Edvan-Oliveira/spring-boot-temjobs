@@ -2,6 +2,7 @@ package br.com.temjobs.domain;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +12,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -18,16 +22,31 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Oportunidade {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name = "oportunidade_id")
 	private Long id;
+	
+	@NotEmpty(message = "O título da oportunidade é obrigatório!")
+	@Size(min = 5, max = 150, message = "O título da oportunidade deve conter no mínimo {min} caracteres e no máximo {max}!")
 	private String titulo;
+	
+	@NotEmpty(message = "A descrição da oportunidade é obrigatória!")
+	@Size(min = 5, max = 500, message = "A descrição da oportunidade deve conter no mínimo {min} caracteres e no máximo {max}!")
 	private String descricao;
+	
+	@NotEmpty(message = "A data de início da oportunidade é obrigatória!")
+	@Size(min = 10, max = 10, message = "O data de inicio da oportunidade deve conter 10 caracteres!")
 	private String dataInicio;
+	
+	@NotEmpty(message = "A data de término da oportunidade é obrigatória!")
+	@Size(min = 10, max = 10, message = "O data de inicio da oportunidade deve conter 10 caracteres!")
 	private String dataTermino;
 	
+	@NotNull(message = "A empresa da oportunidade não pode ser nula!")
 	@JsonIgnoreProperties("oportunidades")
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "empresa_id")
 	private Empresa empresa;
 	
+	@NotNull(message = "A lista de habilidades não pode ser nula!")
+	@NotEmpty(message = "Informe as habilidades para a vaga!")
 	@ManyToMany
 	@JoinTable(
 		name = "oportunidade_habilidade",

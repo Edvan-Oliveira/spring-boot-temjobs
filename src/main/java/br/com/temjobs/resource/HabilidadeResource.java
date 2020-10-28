@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,7 +38,7 @@ public class HabilidadeResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Habilidade> salvar(@RequestBody Habilidade habilidade) {
+	public ResponseEntity<Habilidade> salvar(@Validated @RequestBody Habilidade habilidade) {
 		Habilidade salvarHabilidade = this.habilidadeService.salvar(habilidade);
 		
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
@@ -47,7 +48,7 @@ public class HabilidadeResource {
 	}
 	
 	@PutMapping
-	public Habilidade atualizar(@RequestBody Habilidade habilidade) {
+	public Habilidade atualizar(@Validated @RequestBody Habilidade habilidade) {
 		return this.habilidadeService.atualizar(habilidade);
 	}
 	

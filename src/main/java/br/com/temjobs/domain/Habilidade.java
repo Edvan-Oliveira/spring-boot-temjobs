@@ -5,13 +5,20 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Habilidade {
 	@Id	@GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name = "habilidade_id")
 	private Long id;
 	
+	@NotEmpty(message = "O nome da habilidade é obrigatório!")
+	@Size(min = 5, max = 100, message = "O nome da habilidade deve conter no mínimo {min} caracteres e no máximo {max}!")
 	private String nome;
+	
+	@NotEmpty(message = "A descrição da habilidade é obrigatória!")
+	@Size(min = 5, max = 500, message = "A descrição da habilidade deve conter no mínimo {min} caracteres e no máximo {max}!")
 	private String descricao;
 
 	public Long getId() {

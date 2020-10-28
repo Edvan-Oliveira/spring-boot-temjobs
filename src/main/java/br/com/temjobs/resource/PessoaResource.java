@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,7 +38,7 @@ public class PessoaResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Pessoa> salvar(@RequestBody Pessoa pessoa) {
+	public ResponseEntity<Pessoa> salvar(@Validated @RequestBody Pessoa pessoa) {
 		Pessoa salvarPessoa = this.pessoaService.salvar(pessoa);
 		
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("{id}")
@@ -47,7 +48,7 @@ public class PessoaResource {
 	}
 	
 	@PutMapping
-	public Pessoa atualizar(@RequestBody Pessoa pessoa) {
+	public Pessoa atualizar(@Validated @RequestBody Pessoa pessoa) {
 		return this.pessoaService.atualizar(pessoa);
 	}
 	

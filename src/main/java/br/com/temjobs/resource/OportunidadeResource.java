@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,7 +38,7 @@ public class OportunidadeResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Oportunidade> salvar(@RequestBody Oportunidade oportunidade) {
+	public ResponseEntity<Oportunidade> salvar(@Validated @RequestBody Oportunidade oportunidade) {
 		Oportunidade salvarOportunidade = this.oportunidadeService.salvar(oportunidade);
 		
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("{id}")
@@ -47,7 +48,7 @@ public class OportunidadeResource {
 	}
 	
 	@PutMapping
-	public Oportunidade atualizar(@RequestBody Oportunidade oportunidade) {
+	public Oportunidade atualizar(@Validated @RequestBody Oportunidade oportunidade) {
 		return this.oportunidadeService.atualizar(oportunidade);
 	}
 	

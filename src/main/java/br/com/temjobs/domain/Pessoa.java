@@ -10,15 +10,32 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Pessoa {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name = "pessoa_id")
 	private Long id;
 	
+	@NotEmpty(message = "O nome da pessoa é obrigatório!")
+	@Size(min = 5, max = 150, message = "O nome da pessoa deve conter no mínimo {min} caracteres e no máximo {max}!")
 	private String nome;
+	
+	@Column(unique = true)
+	@Email(message = "Informe um email valido")
+	@NotEmpty(message = "O email da pessoa é obrigatório!")
+	@Size(min = 5, max = 150, message = "O email da pessoa deve conter no mínimo {min} caracteres e no máximo {max}!")
 	private String email;
+	
+	@NotEmpty(message = "A data de nascimento da pessoa é obrigatório!")
+	@Size(min = 10, max = 10, message = "O data de nascimento da pessoa deve conter 10 caracteres!")
 	private String dataNascimento;
+	
+	@NotEmpty(message = "O sexo da pessoa é obrigatório!")
+	@Size(min = 1, max = 1, message = "O sexo da pessoa deve conter no 1 caractere!")
 	private String sexo;
 	
 	@ManyToMany
@@ -27,6 +44,9 @@ public class Pessoa {
 		joinColumns = @JoinColumn(name = "pessoa_id"),
 		inverseJoinColumns = @JoinColumn(name = "habilidade_id")
 	)
+	
+	@NotNull(message = "A lista de habilidades não pode ser nula!")
+	@NotEmpty(message = "Informe as habilidade da pessoa")
 	private List<Habilidade> habilidades;
 
 	public Long getId() {
